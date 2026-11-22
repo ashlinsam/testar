@@ -4,8 +4,8 @@ import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { Cassette } from "@/components/deck/Cassette";
 import { EnableSound } from "@/components/SoundControls";
-import { boxOpen, unlockAudio } from "@/lib/sfx";
-import { FOR_YOU, reelFor, site, tapes } from "@/lib/tapes";
+import { boxOpen, unlockAudio } from "@/core/sfx";
+import { FOR_YOU, reelFor, site, tapes } from "@/core/tapes";
 
 const SPINE_SHELLS: Record<string, string> = {
   smoke: "#4a4744",

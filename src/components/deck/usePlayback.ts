@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useVoice, voice } from "@/lib/voice";
+import { useVoice, voice } from "@/core/voice";
 
 /** Current position, updated every frame while playing so the counter and reels stay in step. */
 export function usePlaybackTime(active: boolean) {

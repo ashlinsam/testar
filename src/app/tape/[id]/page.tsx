@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import { DeckScene } from "@/components/deck/DeckScene";
-import { FOR_YOU, normalizeId, reelFor, tapes } from "@/lib/tapes";
+import { FOR_YOU, normalizeId, reelFor, tapes } from "@/core/tapes";
 
 type Params = { params: Promise<{ id: string }> };
 

@@ -3,10 +3,10 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useRef } from "react";
 import { IconPause, IconPlay, IconRewind, IconStopEject } from "@/components/icons";
-import { asset } from "@/lib/platform";
-import type { Reel } from "@/lib/tapes";
-import { formatTime } from "@/lib/tapes";
-import type { VoiceStatus } from "@/lib/voice";
+import { asset } from "@/core/platform";
+import type { Reel } from "@/core/tapes";
+import { formatTime } from "@/core/tapes";
+import type { VoiceStatus } from "@/core/voice";
 import { Cassette } from "./Cassette";
 import { Counter } from "./Counter";
 

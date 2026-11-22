@@ -3,8 +3,8 @@
 import QRCode from "qrcode";
 import { useEffect, useState } from "react";
 import { IconBack } from "@/components/icons";
-import { NavLink } from "@/lib/platform";
-import { site, tapes } from "@/lib/tapes";
+import { NavLink } from "@/core/platform";
+import { site, tapes } from "@/core/tapes";
 
 /**
  * Printable reference for making the cards: each tape's link and QR code.

@@ -2,8 +2,8 @@
 
 import { useId } from "react";
 import { HandLettering } from "@/components/landing/HandLettering";
-import { asset } from "@/lib/platform";
-import type { Reel, Shell } from "@/lib/tapes";
+import { asset } from "@/core/platform";
+import type { Reel, Shell } from "@/core/tapes";
 
 /**
  * A compact cassette at true proportions (100 × 64 mm → 1000 × 640).

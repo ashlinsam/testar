@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { FOR_YOU, reelFor, tapes } from "@/lib/tapes";
+import { FOR_YOU, reelFor, tapes } from "@/core/tapes";
 import { Cassette } from "./Cassette";
 
 /** A tiny check, cut into the lining of a compartment whose tape has been heard. */

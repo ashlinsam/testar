@@ -3,8 +3,8 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { IconBack } from "@/components/icons";
-import { tick } from "@/lib/sfx";
-import { TOTAL, reelFor } from "@/lib/tapes";
+import { tick } from "@/core/sfx";
+import { TOTAL, reelFor } from "@/core/tapes";
 import { Cassette } from "./Cassette";
 
 const Chevron = ({ flip }: { flip?: boolean }) => (

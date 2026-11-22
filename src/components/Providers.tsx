@@ -2,8 +2,8 @@
 
 import { MotionConfig } from "motion/react";
 import { useEffect } from "react";
-import { music } from "@/lib/music";
-import { unlockAudio } from "@/lib/sfx";
+import { music } from "@/core/music";
+import { unlockAudio } from "@/core/sfx";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {

@@ -3,9 +3,9 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { IconMusic, IconSliders } from "@/components/icons";
-import { music, useMusic } from "@/lib/music";
-import { progress, useProgress } from "@/lib/progress";
-import { tick } from "@/lib/sfx";
+import { music, useMusic } from "@/core/music";
+import { progress, useProgress } from "@/core/progress";
+import { tick } from "@/core/sfx";
 
 /**
  * Header sound controls: a music on/off button, and a small panel for the

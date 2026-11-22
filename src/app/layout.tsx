@@ -8,7 +8,7 @@ import "@fontsource/ibm-plex-mono/latin-400.css";
 import "@fontsource/ibm-plex-mono/latin-500.css";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
-import { site } from "@/lib/tapes";
+import { site } from "@/core/tapes";
 
 export const metadata: Metadata = {
   title: "21 Tapes",

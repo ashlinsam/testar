@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "motion/react";
-import { asset } from "@/lib/platform";
-import type { Memory, Tape } from "@/lib/tapes";
-import { firstName } from "@/lib/tapes";
+import { asset } from "@/core/platform";
+import type { Memory, Tape } from "@/core/tapes";
+import { firstName } from "@/core/tapes";
 
 /** Anything else they kept with the tape, laid out beside the deck as objects. */
 export function Keepsakes({ tape }: { tape: Tape }) {
