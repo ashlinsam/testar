@@ -12,7 +12,6 @@ export const site: Site = {
     // Played in this order, then back to the first.
     // `gain` levels each song to the quietest one; `start`/`end` skip silence.
     tracks: [
-      { src: "/audio/background/golden-hour.mp3", title: "golden hour", artist: "JVKE", gain: 0.42 },
       { src: "/audio/background/a-couple-minutes.mp3", title: "A Couple Minutes", artist: "Olivia Dean", gain: 0.54, end: 209.6 },
       { src: "/audio/background/like-a-tattoo.mp3", title: "Like a Tattoo", artist: "Sade", gain: 1, start: 0.8, end: 214.6 },
     ],
