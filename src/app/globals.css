@@ -1,0 +1,828 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ tokens */
+@theme {
+  --color-ivory: #eae4d8;
+  --color-ivory-deep: #ddd5c5;
+  --color-charcoal: #242424;
+  --color-alu: #b8b6b0;
+  --color-walnut: #49382f;
+  --color-walnut-deep: #2a201b;
+  --color-burgundy: #713e43;
+  --color-olive: #777967;
+  --color-ink: #262422;
+
+  --font-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  color-scheme: dark;
+}
+
+html { background: #33271f; }
+
+html,
+body {
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+body { min-height: 100dvh; overflow-x: hidden; }
+
+::selection { background: rgba(234, 228, 216, 0.25); }
+
+:focus-visible {
+  outline: 2px solid #e9dcc0;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Silkscreened hardware lettering. */
+.engraved {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------- the desk */
+.desk {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 95% 65% at var(--lamp-x, 30%) -5%, rgba(255, 228, 190, 0.32), rgba(255, 214, 165, 0.1) 50%, transparent 78%),
+    radial-gradient(ellipse 140% 110% at 40% 20%, transparent 45%, rgba(18, 12, 8, 0.4) 80%, rgba(14, 10, 7, 0.7) 100%),
+    linear-gradient(rgba(120, 86, 62, 0.22), rgba(120, 86, 62, 0.22)),
+    url("/textures/walnut.jpg") center / cover;
+}
+.desk::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/textures/grain.png");
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.page {
+  min-height: 100dvh;
+  padding: calc(var(--safe-top) + 12px) 16px calc(var(--safe-bottom) + 24px);
+  overflow-x: clip;
+}
+
+/* ------------------------------------------------------------ the deck */
+.deck {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  padding: 0 9px;
+  border-radius: 10px;
+  /* walnut end cheeks */
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(255, 220, 190, 0.12) 2%, transparent 4%, transparent 96%, rgba(255, 220, 190, 0.1) 98%, rgba(0, 0, 0, 0.4)),
+    url("/textures/walnut.jpg") 20% 30% / 500px;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.5),
+    0 14px 22px -10px rgba(0, 0, 0, 0.7),
+    0 40px 60px -26px rgba(0, 0, 0, 0.85);
+}
+
+.deck__face {
+  position: relative;
+  padding: 12px 12px 14px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, rgba(0, 0, 0, 0.035) 1px 2px, transparent 2px 3px),
+    linear-gradient(180deg, #d6d4cf 0%, #c3c1bb 30%, #b8b6b0 62%, #a7a59f 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    inset 1px 0 0 rgba(0, 0, 0, 0.18),
+    inset -1px 0 0 rgba(0, 0, 0, 0.18);
+  color: #3b3a37;
+}
+.deck__face::after {
+  /* the lamp catching the top edge of the metal */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.16) 0%, transparent 28%, transparent 70%, rgba(255, 255, 255, 0.06) 100%);
+  pointer-events: none;
+}
+
+.deck__main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+/* The cassette well, behind its smoked door. */
+.well {
+  position: relative;
+  aspect-ratio: 1.62;
+  border-radius: 5px;
+  padding: 7%;
+  background: linear-gradient(180deg, #121212, #1f1f1e 60%, #2a2928);
+  box-shadow:
+    inset 0 3px 8px rgba(0, 0, 0, 0.9),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.8),
+    0 0 0 2px #8f8d88,
+    0 0 0 3px rgba(255, 255, 255, 0.45);
+  overflow: hidden;
+  perspective: 900px;
+}
+.well__glass {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.04) 26%, transparent 27%, transparent 64%, rgba(255, 255, 255, 0.05) 65%, transparent 80%),
+    rgba(20, 18, 16, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.well__empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(234, 228, 216, 0.28);
+}
+
+/* The tape's photo, behind a small window in the faceplate. */
+.snap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #1a1a19;
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.9),
+    0 0 0 2px #8f8d88,
+    0 0 0 3px rgba(255, 255, 255, 0.45);
+}
+.snap__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.snap__empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(234, 228, 216, 0.28);
+}
+.snap__glass {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 30%, transparent 31%);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(0, 0, 0, 0.35);
+}
+
+/* Mechanical counter drums. */
+.counter {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 3px;
+  background: #1b1b1a;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.drum {
+  position: relative;
+  width: 15px;
+  height: 22px;
+  overflow: hidden;
+  border-radius: 1.5px;
+  background: linear-gradient(180deg, #0c0c0c, #2b2b2a 45%, #2b2b2a 55%, #0c0c0c);
+}
+.drum__strip {
+  display: flex;
+  flex-direction: column;
+  transition: transform 260ms cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+.drum__strip span {
+  height: 22px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: #ecebe6;
+}
+.drum::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 32%, transparent 68%, rgba(0, 0, 0, 0.55));
+  pointer-events: none;
+}
+
+/* Transport keys: piano-style, aluminium caps. */
+.keys {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  padding: 5px;
+  border-radius: 4px;
+  background: #1c1c1b;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.85), 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+.key {
+  position: relative;
+  height: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border-radius: 2px 2px 4px 4px;
+  color: #33322f;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #e4e2dd 0%, #cfcdc7 45%, #b9b7b1 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.18),
+    0 3px 0 #6f6d68,
+    0 4px 5px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+  transition: transform 70ms ease, box-shadow 70ms ease, background 120ms ease;
+}
+.key:active,
+.key[data-down="true"] {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 2px 3px rgba(0, 0, 0, 0.2),
+    0 0 0 #6f6d68,
+    0 1px 1px rgba(0, 0, 0, 0.5);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #cfcdc7 0%, #bdbbb5 50%, #adaba5 100%);
+}
+.key svg { width: 15px; height: 15px; }
+.key__label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #55534e;
+}
+.key[data-down="true"] .key__mark { color: var(--color-burgundy); }
+
+.seek {
+  position: relative;
+  height: 22px;
+  display: flex;
+  align-items: center;
+}
+.seek__track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: #2a2a29;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+}
+.seek__fill { height: 100%; background: #e6e3dc; transform-origin: left; }
+.seek input[type="range"] {
+  position: relative;
+  width: 100%;
+  height: 22px;
+  margin: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.seek input[type="range"]::-webkit-slider-runnable-track { height: 22px; background: transparent; }
+.seek input[type="range"]::-moz-range-track { height: 22px; background: transparent; }
+.seek input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 9px;
+  height: 16px;
+  margin-top: 3px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #f2f1ed, #b3b1ab);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+.seek input[type="range"]::-moz-range-thumb {
+  width: 9px;
+  height: 16px;
+  border: 0;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #f2f1ed, #b3b1ab);
+}
+
+.minikey {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 10px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #2f2f2d, #1f1f1e);
+  color: #e6e3dc;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 0 #0d0d0d, 0 3px 4px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+  transition: transform 70ms ease, box-shadow 70ms ease;
+}
+.minikey:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6), 0 0 0 #0d0d0d;
+}
+.minikey:disabled { opacity: 0.35; cursor: default; }
+
+/* ----------------------------------------------------------- cassettes */
+.cassette {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.hub {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 2.4s linear infinite;
+  animation-play-state: paused;
+}
+[data-motion="play"] .hub { animation-play-state: running; }
+[data-motion="rewind"] .hub {
+  animation-duration: 0.45s;
+  animation-direction: reverse;
+  animation-play-state: running;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ------------------------------------------------------- the collection */
+.tray {
+  position: relative;
+  border-radius: 8px;
+  background:
+    linear-gradient(rgba(30, 20, 15, 0.25), rgba(30, 20, 15, 0.25)),
+    url("/textures/walnut.jpg") 60% 50% / 700px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 225, 195, 0.18),
+    0 2px 2px rgba(0, 0, 0, 0.5),
+    0 20px 34px -16px rgba(0, 0, 0, 0.75);
+  padding: 10px;
+}
+.tray__bed {
+  border-radius: 4px;
+  background: linear-gradient(180deg, #1c1714, #2b231e);
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.85), inset 0 -1px 0 rgba(255, 225, 195, 0.08);
+}
+.tray__row {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 14px;
+  padding: 16px 14px 12px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.tray__row::-webkit-scrollbar { display: none; }
+.slot {
+  position: relative;
+  flex: 0 0 auto;
+  width: 148px;
+  scroll-snap-align: start;
+  padding: 0 7px;
+  border-right: 2px solid rgba(0, 0, 0, 0.35);
+  box-shadow: 1px 0 0 rgba(255, 225, 195, 0.06);
+}
+.slot:last-child { border-right: 0; box-shadow: none; }
+@media (min-width: 900px) {
+  .tray__row {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    overflow: visible;
+    padding: 14px 8px;
+    row-gap: 14px;
+  }
+  .slot { width: auto; }
+  .slot:nth-child(7n) { border-right: 0; box-shadow: none; }
+}
+.slot__btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  border-radius: 6px;
+}
+.slot__empty {
+  aspect-ratio: 1000 / 640;
+  border-radius: 6px;
+  border: 1px dashed rgba(234, 228, 216, 0.18);
+  display: grid;
+  place-items: center;
+}
+.sticker {
+  position: absolute;
+  top: -6px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 35% 30%, #9a9c88, #777967 60%, #5f6152);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: #f1eee6;
+}
+
+/* ---------------------------------------------------------------- paper */
+.paper {
+  background-color: #efe9de;
+  background-image: url("/textures/paper.jpg");
+  background-size: 900px;
+  color: var(--color-ink);
+}
+.print {
+  padding: 9px 9px 0;
+  background: #f4f1ea;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.35),
+    0 10px 18px -6px rgba(0, 0, 0, 0.55),
+    0 28px 40px -20px rgba(0, 0, 0, 0.7);
+}
+.sheet {
+  position: relative;
+  padding: 22px 22px 20px;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.3),
+    0 10px 18px -6px rgba(0, 0, 0, 0.5),
+    0 26px 40px -18px rgba(0, 0, 0, 0.65);
+}
+.ticket {
+  --notch: 9px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  color: var(--color-ivory);
+  background: linear-gradient(170deg, #7e474d, #713e43 50%, #5d3236);
+  border-radius: 4px;
+  filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.5)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle var(--notch) at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+}
+.ticket__stub { border-left: 1.5px dashed rgba(234, 228, 216, 0.45); }
+.tape-strip {
+  position: absolute;
+  width: 72px;
+  height: 22px;
+  background: rgba(240, 232, 210, 0.55);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 4px;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--color-ivory);
+  box-shadow: inset 0 0 0 1px rgba(234, 228, 216, 0.4);
+  transition: background-color 150ms ease, transform 80ms ease;
+}
+.btn:active { transform: translateY(1px); background: rgba(234, 228, 216, 0.08); }
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 14px;
+  color: rgba(234, 228, 216, 0.75);
+  text-decoration: underline;
+  text-decoration-color: rgba(234, 228, 216, 0.3);
+  text-underline-offset: 4px;
+}
+.link:active { color: var(--color-ivory); }
+
+/* ------------------------------------------------------- motion safety */
+@media (prefers-reduced-motion: reduce) {
+  .hub { animation: none !important; }
+  .drum__strip { transition: none !important; }
+}
+
+/* ------------------------------------------------------- the landing box */
+.landing-object {
+  position: relative;
+  width: min(80vw, 560px);
+  /* room below for the lid, which sits askew across the lower half */
+  margin-bottom: 30%;
+}
+@media (max-height: 700px) and (max-width: 999px) {
+  .landing-object { width: min(72vw, 400px); }
+}
+@media (min-width: 1000px) {
+  .landing-object { width: min(46vw, 600px); }
+}
+
+/* Charcoal book-cloth over board. */
+.linen {
+  background-color: #34322f;
+  background-image:
+    linear-gradient(140deg, rgba(255, 244, 228, 0.1), rgba(255, 244, 228, 0.02) 40%, rgba(0, 0, 0, 0.16)),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.13) 0 1px, transparent 1px 3px);
+}
+
+.abox {
+  position: relative;
+  aspect-ratio: 10 / 7;
+  border-radius: 5px;
+  padding: 3.4%;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 240, 220, 0.18),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.35),
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    22px 30px 46px -12px rgba(0, 0, 0, 0.72);
+}
+.abox__well {
+  position: relative;
+  height: 100%;
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: #ece6da;
+  background-image: url("/textures/paper.jpg");
+  background-size: 600px;
+  /* the walls throw shadow away from the lamp, top left */
+  box-shadow:
+    inset 16px 18px 26px -6px rgba(30, 20, 12, 0.55),
+    inset -3px -3px 8px rgba(30, 20, 12, 0.18),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+}
+.abox__tape {
+  position: absolute;
+  left: 16.5%;
+  top: 4.5%;
+  width: 66.5%;
+  filter: drop-shadow(6px 9px 9px rgba(20, 12, 8, 0.45)) drop-shadow(1px 2px 2px rgba(20, 12, 8, 0.4));
+}
+.abox__spines {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 5%;
+  height: 22%;
+  display: grid;
+  grid-template-columns: repeat(21, minmax(0, 1fr));
+  gap: 0.35%;
+}
+.spine {
+  position: relative;
+  border-radius: 1.5px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent 30%, rgba(0, 0, 0, 0.25));
+  box-shadow: 2px 3px 4px rgba(20, 12, 8, 0.35);
+}
+.spine__label {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 14%;
+  bottom: 14%;
+  border-radius: 1px;
+  background: #f3eee4;
+  display: grid;
+  place-items: center;
+}
+.abox__lid {
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  transform-origin: 50% 50%;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 240, 220, 0.22),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.4),
+    inset 3px 0 0 rgba(255, 240, 220, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    18px 26px 40px -10px rgba(0, 0, 0, 0.7);
+}
+.abox__lid::before {
+  /* the lid's turned-in edge */
+  content: "";
+  position: absolute;
+  inset: 2.2%;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 240, 220, 0.05);
+  pointer-events: none;
+}
+/* Brass label holder with a typed card. */
+.holder {
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  width: 34%;
+  aspect-ratio: 2.1;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  padding: 3.5% 4%;
+  background: linear-gradient(145deg, #e9d7ae, #b59a70 45%, #7c6441);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5), 2px 3px 5px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 248, 225, 0.6);
+}
+.holder__card {
+  height: 100%;
+  border-radius: 1px;
+  background-color: #f1ece2;
+  background-image: url("/textures/paper.jpg");
+  background-size: 300px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink);
+  text-align: center;
+}
+.holder::before,
+.holder::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff2cf, #8c7350);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+.holder::before { left: -8px; }
+.holder::after { right: -8px; }
+
+.btn--caps {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  min-height: 50px;
+  padding: 0 26px;
+}
+
+
+/* ----------------------------------------------------- the collector's box */
+.case {
+  position: relative;
+  border-radius: 10px;
+  padding: 12px;
+  background:
+    linear-gradient(150deg, rgba(255, 240, 215, 0.16), rgba(255, 240, 215, 0) 40%, rgba(40, 20, 8, 0.18)),
+    url("/textures/oak.jpg") 30% 40% / 900px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 238, 210, 0.45),
+    inset 0 -2px 0 rgba(60, 32, 14, 0.35),
+    inset 1px 0 0 rgba(255, 238, 210, 0.15),
+    0 2px 2px rgba(30, 16, 8, 0.45),
+    18px 26px 44px -16px rgba(20, 10, 4, 0.6);
+}
+@media (min-width: 1024px) {
+  .case { padding: 16px; border-radius: 12px; }
+}
+.case__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+@media (min-width: 640px) {
+  .case__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .case__grid { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+}
+
+/* One compartment: an ivory-lined well cut into the oak. */
+.cell {
+  position: relative;
+  aspect-ratio: 1.36;
+  border-radius: 3px;
+  background-color: #efe9dd;
+  background-image: url("/textures/paper.jpg");
+  background-size: 500px;
+  box-shadow:
+    inset 7px 8px 12px -4px rgba(70, 42, 20, 0.45),
+    inset -1px -1px 3px rgba(70, 42, 20, 0.18),
+    inset 0 0 0 1px rgba(60, 32, 14, 0.35),
+    0 1px 0 rgba(255, 238, 210, 0.35);
+}
+.cell__btn {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0 7%;
+  background: none;
+  border: 0;
+  border-radius: 3px;
+  -webkit-tap-highlight-color: transparent;
+}
+.cell__tape {
+  width: 100%;
+  filter: drop-shadow(1.5px 2.5px 1.5px rgba(40, 22, 10, 0.45)) drop-shadow(4px 6px 6px rgba(40, 22, 10, 0.18));
+}
+.cell__mark {
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  color: rgba(113, 62, 67, 0.75);
+}
+.cell__num {
+  position: absolute;
+  left: 7px;
+  bottom: 3px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(38, 36, 34, 0.42);
+}
+.case__drawer {
+  margin-top: 7px;
+  display: flex;
+  justify-content: center;
+}
+.cell--solo { width: calc((100% - 7px) / 2); }
+@media (min-width: 640px) { .cell--solo { width: calc((100% - 14px) / 3); } }
+@media (min-width: 1024px) { .case__drawer { margin-top: 8px; } .cell--solo { width: calc((100% - 48px) / 7); } }
+
+/* ------------------------------------------------------------- browsing */
+.browse {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--safe-top) + 10px) 16px calc(var(--safe-bottom) + 18px);
+  background: radial-gradient(ellipse 90% 70% at 50% 40%, rgba(70, 52, 38, 0.6), rgba(34, 25, 18, 0.82));
+}
+.flip-card {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 640ms cubic-bezier(0.45, 0.05, 0.25, 1);
+}
+.flip-card[data-side="B"] { transform: rotateY(180deg); }
+.flip-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-face--b {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+}
+.arrow {
+  /* display is set where it's used, so Tailwind's responsive hidden/grid can apply */
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: var(--color-ivory);
+  box-shadow: inset 0 0 0 1px rgba(234, 228, 216, 0.3);
+  transition: background-color 150ms ease, opacity 150ms ease;
+}
+.arrow:active { background: rgba(234, 228, 216, 0.1); }
+.arrow:disabled { opacity: 0.25; cursor: default; }
+.btn--solid {
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 6px 14px -6px rgba(0, 0, 0, 0.5);
+}
+.btn--solid:active { background: #ddd5c5; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-card { transition: none !important; }
+}

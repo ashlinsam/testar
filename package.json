@@ -1,0 +1,44 @@
+{
+  "name": "21-tapes",
+  "version": "1.0.0",
+  "description": "21 tapes. 21 voices. A personal archive for a 21st birthday.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "check": "node scripts/check-content.mjs",
+    "nfc-urls": "node scripts/nfc-urls.mjs",
+    "durations": "node scripts/durations.mjs",
+    "typecheck": "tsc --noEmit",
+    "preview:build": "node scripts/build-preview.mjs",
+    "qr": "node scripts/qr.mjs",
+    "build:static": "STATIC_EXPORT=1 next build"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "motion": "^14.14.0",
+    "next": "^16.4.6",
+    "qrcode": "^1.5.4",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.5",
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/node": "^26.6.6",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "postcss": "^8.5.33",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^5.9.3"
+  },
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  }
+}

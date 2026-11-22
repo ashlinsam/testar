@@ -1,0 +1,12 @@
+# Render Blueprint: deploys 21 Tapes as a free Static Site (no spin-down, served from Render's CDN).
+# In Render: New → Blueprint → pick this repository. Or create a Static Site by hand with the same settings.
+services:
+  - type: web
+    name: 21-tapes
+    runtime: static
+    buildCommand: npm ci && npm run build:static
+    staticPublishPath: ./out
+    headers:
+      - path: /audio/*
+        name: Cache-Control
+        value: public, max-age=604800
